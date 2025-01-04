@@ -6,7 +6,7 @@ name: CD
 # events but only for the master branch
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -20,16 +20,16 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: CD
         run: echo 'CD is Disabled (Check workflow comment for the code).'
-      # - name: Deploy using ssh
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.HOST }}
-      #     username: ${{ secrets.USERNAME }}
-      #     key: ${{ secrets.PRIVATE_KEY }}
-      #     port: 22
-      #     script: |
-      #       cd ~/apps/ga-ci-cd-nodejs
-      #       git pull origin master
-      #       git status
-      #       npm install --only=prod
-      #       pm2 restart YoutubeApp
+       - name: Deploy using ssh
+         uses: appleboy/ssh-action@master
+         with:
+           host: ${{ secrets.HOST }}
+           username: ${{ secrets.USERNAME }}
+           key: ${{ secrets.PRIVATE_KEY }}
+           port: 22
+           script: |
+             cd ~/home/srv611531.hstgr.cloud
+             git pull origin master
+             git status
+             npm install --only=prod
+             pm2 restart YoutubeApp
